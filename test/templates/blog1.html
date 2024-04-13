@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ name }}'s Blog</title>
+</head>
+<body>
+    <h2>{{ name }}'s Blog</h2>
+    <p>{{ friends|length }} Friends</p>
+    <ul>
+        {% for friend in friends %}
+        <li>{{ friend }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
