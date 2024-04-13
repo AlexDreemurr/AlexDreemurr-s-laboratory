@@ -1,9 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, request, url_for, redirect, render_template
 from markupsafe import escape
+import time
 
 app = Flask(__name__)
 
-name = "AlexDreemurr"
+myname = "AlexDreemurr"
 friends = ["KiraRettosei",
            "Akari",
            "Yukii",
@@ -19,9 +20,17 @@ def hello(name):
 app.run()
 '''
 
-@app.route("/")
+@app.route("/", methods = ["GET", "POST"])
 def index():
-    return render_template("blog1.html", name = name, friends = friends)
+    if request.method == "POST":
+        name = request.form.get("name")
+        message = request.form.get("message")
+        print(name, message)
+        with open("messages.txt", "a") as file:
+            localtime = time.asctime( time.localtime(time.time()) )
+            file.write(f"{localtime} {name}::{message}\n")
 
-app.run()
+    return render_template("blog1.html", name = myname, friends = friends)
+
+app.run(host = "172.20.10.2", port=5000)
 
